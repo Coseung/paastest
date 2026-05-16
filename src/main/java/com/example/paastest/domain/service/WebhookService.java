@@ -37,7 +37,8 @@ public class WebhookService {
         erpRequest.put("sync_status", "COMPLETED");
 
 
-        String erpUrl = "https://webhook.site/31c8a4c5-9f0a-4264-81f5-ee31acdec4e3";
+        String erpUrl = "https://webhook.site/";
+//        String erpUrl = "https://webhook.site/31c8a4c5-9f0a-4264-81f5-ee31acdec4e3";
 
         log.info("[ERP 전송 시작] 대상 ID: {}", erpRequest.get("erp_ref_id").asText());
 
