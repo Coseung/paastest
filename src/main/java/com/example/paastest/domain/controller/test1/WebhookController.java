@@ -1,6 +1,6 @@
-package com.example.paastest.domain.controller;
+package com.example.paastest.domain.controller.test1;
 
-import com.example.paastest.domain.service.WebhookService;
+import com.example.paastest.domain.service.test1.WebhookService;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
