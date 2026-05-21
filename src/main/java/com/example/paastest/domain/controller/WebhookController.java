@@ -1,6 +1,8 @@
 package com.example.paastest.domain.controller;
 
+import com.example.paastest.domain.service.ErpKafkaService;
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,24 +12,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1")
+@RequiredArgsConstructor
 public class WebhookController {
+    private final ErpKafkaService erpKafkaService;
+
     @PostMapping("/inbound/orders")
     public ResponseEntity<String> customerOders(@RequestBody JsonNode payload){
-        // 1. webhook_id 존재 여부 검사
+        // webhook_id 존재 여부 검사
         if (!payload.has("webhook_id") || payload.path("webhook_id").asText().isBlank()) {
             return ResponseEntity
                     .badRequest()
                     .body("webhook_id가 없습니다.");
         }
 
-        // 2. event_type 존재 여부 검사
+        // event_type 존재 여부 검사
         if (!payload.has("event_type") || payload.path("event_type").asText().isBlank()) {
             return ResponseEntity
                     .badRequest()
                     .body("event_type이 없습니다.");
         }
 
-        // 3. event_type 값 검사
+        // event_type 값 검사
         String eventType = payload.path("event_type").asText();
 
         if (!eventType.equals("order.created")) {
@@ -35,6 +40,7 @@ public class WebhookController {
                     .badRequest()
                     .body("지원하지 않는 event_type입니다.");
         }
+        erpKafkaService.sendOrderToErp(payload);
 
 
         // 유효성 검사 통과
