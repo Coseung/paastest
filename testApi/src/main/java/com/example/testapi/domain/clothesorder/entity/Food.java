@@ -16,4 +16,12 @@ public class Food {
     private int stock;
 
     private String foodName;
+
+
+    public void decreaseStock(int quntity){
+        if(this.stock < quntity){
+            throw new IllegalArgumentException("해당 음식 재고가 부족합니다.");
+        }
+        this.stock -= quntity;
+    }
 }
