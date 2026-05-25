@@ -8,12 +8,14 @@ import com.example.testapi.domain.clothesorder.repository.order.ClothesOrderRepo
 import com.example.testapi.domain.clothesorder.repository.order.OrderRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.beans.Transient;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ClothesOrderStrategy implements OrderStrategy{
 
     private final ClothesOrderRepository clothesOrderRepository;
@@ -27,18 +29,25 @@ public class ClothesOrderStrategy implements OrderStrategy{
     @Transactional
     public void processOrder(OrderRequestDto request) {
 
-        Long itemId = request.getItems().getItemId();
+        Long itemId = request.getItems().getId();
 
         Clothes product = clothesOrderRepository.findById(itemId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다. ID: " + itemId));
+                .orElseThrow(() -> {
+                    log.warn("[의류 주문 실패] 존재하지 않는 상품 ID: {}", itemId);
+                    return new IllegalArgumentException("존재하지 않는 상품입니다. ID: " + itemId);
+                });
+        log.info("[의류 재고 확인] 상품명: {}, 현재 재고: {}", product.getClothesName(), product.getStock());
 
         if (product.getStock() < 1) {
+            log.warn("[의류 주문 실패] 재고 부족 - 상품 ID: {}, 상품명: {}", itemId, product.getClothesName());
             throw new IllegalStateException("선택하신 상품의 재고가 모두 소진되었습니다.");
         }
 
         product.decreaseStock(1);
+        log.info("[의류 재고 차감 완료] 상품 ID: {}, 남은 재고: {}", itemId, product.getStock());
         Orders orders =request.ordertoEntity();
 
-        orderRepository.save(orders);
+        Orders savedOrder = orderRepository.save(orders);
+        log.info("[의류 주문 저장 완료]  생성된 주문 Id (pk): {}",savedOrder.getId());
     }
 }

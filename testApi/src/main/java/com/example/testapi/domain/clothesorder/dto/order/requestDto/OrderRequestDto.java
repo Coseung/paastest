@@ -51,7 +51,7 @@ public class OrderRequestDto {
         private String itemType;
 
         @NotNull(message = "주문 상품이 없습니다.")
-        private Long itemId;
+        private Long id;
 
         public String getItemType() {
             return itemType == null ? null : itemType.trim().toLowerCase();
@@ -67,7 +67,7 @@ public class OrderRequestDto {
                 .contactName(this.getContactInfo().getContactName())
                 .mobile(this.getContactInfo().getMobile())
                 .itemType(this.getItems().getItemType())
-                .itemId(this.getItems().getItemId())
+                .itemId(this.getItems().getId())
                 .build();
     }
 }

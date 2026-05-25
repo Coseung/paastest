@@ -5,17 +5,21 @@ import com.example.testapi.domain.clothesorder.component.OrderStrategy;
 import com.example.testapi.domain.clothesorder.dto.order.requestDto.OrderRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
+@Service
 public class OrderServiceImpl implements OrderService {
 
     private final List<OrderStrategy> orderStrategies;
 
     @Override
     public void handleOrder(ItemType itemType, OrderRequestDto request) {
+        log.info("[주문 시작] 이메일: {}, 주문 타입: {}",
+                request.getContactInfo().getContactEmail(), itemType);
         OrderStrategy targetStrategy = orderStrategies.stream()
                 .filter(strategy -> strategy.isSupported(itemType))
                 .findFirst()
@@ -23,9 +27,13 @@ public class OrderServiceImpl implements OrderService {
 
         try {
             targetStrategy.processOrder(request);
+            log.info("[주문 성공] 이메일: {}, 주문 타입: {} 처리 완료",
+                    request.getContactInfo().getContactEmail(), itemType);
 
         } catch (Exception e) {
-            throw new RuntimeException("주문 진행중 오류가 발생하였습니다 : {}",e);
+            log.error("[주문 오류 발생] 이메일: {}, 사유: {}",
+                    request.getContactInfo().getContactEmail(), e.getMessage(), e);
+            throw new RuntimeException("주문 진행중 오류가 발생하였습니다 : {}"+e.getMessage(),e);
         }
 
 
