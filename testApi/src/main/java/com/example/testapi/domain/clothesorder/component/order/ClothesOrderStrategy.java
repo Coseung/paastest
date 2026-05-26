@@ -1,17 +1,19 @@
-package com.example.testapi.domain.clothesorder.component;
+package com.example.testapi.domain.clothesorder.component.order;
 
 import com.example.testapi.domain.clothesorder.Enum.ItemType;
+import com.example.testapi.domain.clothesorder.Enum.VenderType;
 import com.example.testapi.domain.clothesorder.dto.order.requestDto.OrderRequestDto;
 import com.example.testapi.domain.clothesorder.entity.Clothes;
 import com.example.testapi.domain.clothesorder.entity.Orders;
 import com.example.testapi.domain.clothesorder.repository.order.ClothesOrderRepository;
 import com.example.testapi.domain.clothesorder.repository.order.OrderRepository;
+import com.example.testapi.domain.clothesorder.service.order.OrderService;
+import com.example.testapi.domain.clothesorder.service.reorder.RestockService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.beans.Transient;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Component
 @RequiredArgsConstructor
@@ -20,6 +22,9 @@ public class ClothesOrderStrategy implements OrderStrategy{
 
     private final ClothesOrderRepository clothesOrderRepository;
     private final OrderRepository orderRepository;
+    private final RestockService restockService;
+    private final LocalValidatorFactoryBean localValidatorFactoryBean;
+
     @Override
     public boolean isSupported(ItemType itemType) {
         return itemType == ItemType.CLOTHES;
@@ -45,6 +50,12 @@ public class ClothesOrderStrategy implements OrderStrategy{
 
         product.decreaseStock(1);
         log.info("[의류 재고 차감 완료] 상품 ID: {}, 남은 재고: {}", itemId, product.getStock());
+
+        if (product.getStock() <10){
+            log.info("[의류 재고 10 개 이하 재입고 요청] 해당 이름: {}",product.getClothesName());
+            restockService.RestockTrigger(VenderType.AMADON, product.getClothesName(), 100);
+            log.info("[의류 재고 재입고 요청 완료]");
+        }
         Orders orders =request.ordertoEntity();
 
         Orders savedOrder = orderRepository.save(orders);

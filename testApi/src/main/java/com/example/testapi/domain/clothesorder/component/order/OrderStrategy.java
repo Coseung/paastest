@@ -1,4 +1,4 @@
-package com.example.testapi.domain.clothesorder.component;
+package com.example.testapi.domain.clothesorder.component.order;
 
 import com.example.testapi.domain.clothesorder.Enum.ItemType;
 import com.example.testapi.domain.clothesorder.dto.order.requestDto.OrderRequestDto;

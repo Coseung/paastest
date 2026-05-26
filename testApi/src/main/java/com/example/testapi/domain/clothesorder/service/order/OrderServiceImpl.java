@@ -1,7 +1,7 @@
 package com.example.testapi.domain.clothesorder.service.order;
 
 import com.example.testapi.domain.clothesorder.Enum.ItemType;
-import com.example.testapi.domain.clothesorder.component.OrderStrategy;
+import com.example.testapi.domain.clothesorder.component.order.OrderStrategy;
 import com.example.testapi.domain.clothesorder.dto.order.requestDto.OrderRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
         } catch (Exception e) {
             log.error("[주문 오류 발생] 이메일: {}, 사유: {}",
                     request.getContactInfo().getContactEmail(), e.getMessage(), e);
-            throw new RuntimeException("주문 진행중 오류가 발생하였습니다 : {}"+e.getMessage(),e);
+            throw new RuntimeException("주문 진행중 오류가 발생하였습니다 : {}",e);
         }
 
 
