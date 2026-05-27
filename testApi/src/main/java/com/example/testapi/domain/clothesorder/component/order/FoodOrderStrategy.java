@@ -2,12 +2,14 @@ package com.example.testapi.domain.clothesorder.component.order;
 
 import com.example.testapi.domain.clothesorder.Enum.ItemType;
 import com.example.testapi.domain.clothesorder.Enum.VenderType;
-import com.example.testapi.domain.clothesorder.dto.order.requestDto.OrderRequestDto;
+import com.example.testapi.domain.clothesorder.dto.order.requestdto.OrderRequestDto;
+import com.example.testapi.domain.clothesorder.dto.order.responsedto.OrderResponseDto;
 import com.example.testapi.domain.clothesorder.entity.Food;
 import com.example.testapi.domain.clothesorder.entity.Orders;
 import com.example.testapi.domain.clothesorder.repository.order.FoodOrderRepository;
 import com.example.testapi.domain.clothesorder.repository.order.OrderRepository;
 import com.example.testapi.domain.clothesorder.service.reorder.RestockService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
+
 public class FoodOrderStrategy implements OrderStrategy{
 
     private final FoodOrderRepository foodOrderRepository;
@@ -27,7 +30,8 @@ public class FoodOrderStrategy implements OrderStrategy{
     }
 
     @Override
-    public void processOrder(OrderRequestDto request) {
+    @Transactional
+    public OrderResponseDto processOrder(OrderRequestDto request) {
         Long itemId = request.getItems().getId();
 
         Food product = foodOrderRepository.findById(itemId)
@@ -55,6 +59,10 @@ public class FoodOrderStrategy implements OrderStrategy{
 
         Orders savedOrder = orderRepository.save(orders);
         log.info("[의류 주문 저장 완료]  생성된 주문 Id (pk): {}",savedOrder.getId());
-
+        return OrderResponseDto.builder()
+                .id(savedOrder.getId())
+                        .email(savedOrder.getContactEmail())
+                                .itemName(product.getFoodName())
+                                        .build();
     }
 }

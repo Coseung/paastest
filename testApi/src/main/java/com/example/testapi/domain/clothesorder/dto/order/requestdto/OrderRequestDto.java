@@ -1,11 +1,10 @@
-package com.example.testapi.domain.clothesorder.dto.order.requestDto;
+package com.example.testapi.domain.clothesorder.dto.order.requestdto;
 
 import com.example.testapi.domain.clothesorder.Enum.ItemType;
 import com.example.testapi.domain.clothesorder.entity.Orders;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

@@ -20,11 +20,11 @@ public class AmadonStrategy implements RestockStrategy{
 
     @Override
     public void requestRestock(String itemName, int stock) {
-        String encrypyName = itemName + "123";
+        String encryptName = itemName + "123";
 
         Restock request = Restock.builder()
                 .itemName(itemName)
-                .encryptName(encrypyName)
+                .encryptName(encryptName)
                 .stock(stock)
                 .build();
         try{

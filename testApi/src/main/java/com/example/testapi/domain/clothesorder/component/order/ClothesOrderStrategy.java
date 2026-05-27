@@ -2,12 +2,12 @@ package com.example.testapi.domain.clothesorder.component.order;
 
 import com.example.testapi.domain.clothesorder.Enum.ItemType;
 import com.example.testapi.domain.clothesorder.Enum.VenderType;
-import com.example.testapi.domain.clothesorder.dto.order.requestDto.OrderRequestDto;
+import com.example.testapi.domain.clothesorder.dto.order.requestdto.OrderRequestDto;
+import com.example.testapi.domain.clothesorder.dto.order.responsedto.OrderResponseDto;
 import com.example.testapi.domain.clothesorder.entity.Clothes;
 import com.example.testapi.domain.clothesorder.entity.Orders;
 import com.example.testapi.domain.clothesorder.repository.order.ClothesOrderRepository;
 import com.example.testapi.domain.clothesorder.repository.order.OrderRepository;
-import com.example.testapi.domain.clothesorder.service.order.OrderService;
 import com.example.testapi.domain.clothesorder.service.reorder.RestockService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class ClothesOrderStrategy implements OrderStrategy{
 
     @Override
     @Transactional
-    public void processOrder(OrderRequestDto request) {
+    public OrderResponseDto processOrder(OrderRequestDto request) {
 
         Long itemId = request.getItems().getId();
 
@@ -53,12 +53,17 @@ public class ClothesOrderStrategy implements OrderStrategy{
 
         if (product.getStock() <10){
             log.info("[의류 재고 10 개 이하 재입고 요청] 해당 이름: {}",product.getClothesName());
-            restockService.RestockTrigger(VenderType.AMADON, product.getClothesName(), 100);
+            restockService.RestockTrigger(VenderType.COUMANG, product.getClothesName(), 100);
             log.info("[의류 재고 재입고 요청 완료]");
         }
         Orders orders =request.ordertoEntity();
 
         Orders savedOrder = orderRepository.save(orders);
         log.info("[의류 주문 저장 완료]  생성된 주문 Id (pk): {}",savedOrder.getId());
+        return OrderResponseDto.builder()
+                .id(savedOrder.getId())
+                .email(savedOrder.getContactEmail())
+                .itemName(product.getClothesName())
+                .build();
     }
 }

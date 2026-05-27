@@ -17,10 +17,10 @@ public class Clothes {
 
     private String clothesName;
 
-    public void decreaseStock(int quntity){
-        if(this.stock < quntity){
+    public void decreaseStock(int quantity){
+        if(this.stock < quantity){
             throw new IllegalArgumentException("재고가 부족합니다.");
         }
-        this.stock -= quntity;
+        this.stock -= quantity;
     }
 }

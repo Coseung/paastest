@@ -21,11 +21,11 @@ public class CoumangStrategy implements RestockStrategy{
 
     @Override
     public void requestRestock(String itemName, int stock) {
-        String encrypyName = "123" + itemName;
+        String encryptName = "123" + itemName;
 
         Restock request = Restock.builder()
                 .itemName(itemName)
-                .encryptName(encrypyName)
+                .encryptName(encryptName)
                 .stock(stock)
                 .build();
         try{
