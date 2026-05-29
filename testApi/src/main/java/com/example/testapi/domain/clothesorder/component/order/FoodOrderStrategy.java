@@ -34,7 +34,7 @@ public class FoodOrderStrategy implements OrderStrategy{
     public OrderResponseDto processOrder(OrderRequestDto request) {
         Long itemId = request.getItems().getId();
 
-        Food product = foodOrderRepository.findById(itemId)
+        Food product = foodOrderRepository.findByIdForUpdate(itemId)
                 .orElseThrow(() -> {
                     log.warn("[음식 주문 실패] 존재하지 않는 상품 ID: {}", itemId);
                     return new IllegalArgumentException("존재하지 않는 상품입니다. ID: " + itemId);

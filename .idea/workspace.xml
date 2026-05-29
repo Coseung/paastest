@@ -5,8 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="15310622-f504-465a-b6bb-54152b2b1d56" name="변경" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testApi/src/main/java/com/example/testapi/domain/clothesorder/component/order/ClothesOrderStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/testApi/src/main/java/com/example/testapi/domain/clothesorder/component/order/ClothesOrderStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testApi/src/main/java/com/example/testapi/domain/clothesorder/component/order/FoodOrderStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/testApi/src/main/java/com/example/testapi/domain/clothesorder/component/order/FoodOrderStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testApi/src/main/java/com/example/testapi/domain/clothesorder/repository/order/ClothesOrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/testApi/src/main/java/com/example/testapi/domain/clothesorder/repository/order/ClothesOrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testApi/src/main/java/com/example/testapi/domain/clothesorder/repository/order/FoodOrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/testApi/src/main/java/com/example/testapi/domain/clothesorder/repository/order/FoodOrderRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +84,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.PaastestApplication.executor": "Run",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "feat/webhookTest1",
+    "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/mac/workSpace/paastest",
@@ -135,6 +138,7 @@
       <workItem from="1779263465266" duration="4936000" />
       <workItem from="1779327600387" duration="8317000" />
       <workItem from="1779523635801" duration="48000" />
+      <workItem from="1780021704415" duration="65000" />
     </task>
     <servers />
   </component>

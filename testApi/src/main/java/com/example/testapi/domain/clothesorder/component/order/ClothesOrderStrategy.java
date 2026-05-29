@@ -36,7 +36,7 @@ public class ClothesOrderStrategy implements OrderStrategy{
 
         Long itemId = request.getItems().getId();
 
-        Clothes product = clothesOrderRepository.findById(itemId)
+        Clothes product = clothesOrderRepository.findbyIdForUpdate(itemId)
                 .orElseThrow(() -> {
                     log.warn("[의류 주문 실패] 존재하지 않는 상품 ID: {}", itemId);
                     return new IllegalArgumentException("존재하지 않는 상품입니다. ID: " + itemId);
