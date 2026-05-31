@@ -24,3 +24,11 @@ spring:
     level:
       org.hibernate.SQL: debug
       org.hibernate.orm.jdbc.bind: trace
+
+
+  config:
+    import:
+      - optional:file:src/main/resources/application-secret.yaml
+    # Access Token 유효 시간 (밀리초 단위)
+    # 1,800,000 ms = 30분 (60초 * 30분 * 1000ms)
+    access-token-expiration: 1800000
